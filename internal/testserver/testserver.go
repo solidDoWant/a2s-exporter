@@ -182,7 +182,7 @@ func (t *TestServer) writePlayerInfo(out io.Writer) error {
 	for _, player := range info.Players {
 		buf.WriteByte(player.Index)
 		buf.WriteCString(player.Name)
-		buf.WriteUInt32(player.Score)
+		buf.WriteUInt32(uint32(player.Score))
 		buf.WriteFloat32(player.Duration)
 
 		if t.ServerInfo != nil && a2s.AppID(t.ServerInfo.ID) == a2s.App_TheShip {
