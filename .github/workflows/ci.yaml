@@ -16,7 +16,7 @@ jobs:
       - uses: actions/setup-go@v5
         with:
           go-version: ${{ matrix.go-version }}
-      - run: go test -cover ./...
+      - run: go test -race -cover ./...
 
   Lint:
     runs-on: ubuntu-latest

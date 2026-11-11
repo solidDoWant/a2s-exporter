@@ -3,6 +3,7 @@ package collector
 import (
 	"fmt"
 	"reflect"
+	"sync"
 
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/rumblefrog/go-a2s"
@@ -12,8 +13,11 @@ type Collector struct {
 	addr                 string
 	clientOptions        []func(*a2s.Client) error
 	excludePlayerMetrics bool
-	client               *a2s.Client
-	descs                map[string]*prometheus.Desc
+	// mu serializes queries: Collect runs once per scrape, and HA scrapers
+	// scrape at the same time.
+	mu     sync.Mutex
+	client *a2s.Client
+	descs  map[string]*prometheus.Desc
 }
 
 type adder func(name string, value float64, labelValues ...string)
@@ -101,6 +105,9 @@ func (c *Collector) Collect(metrics chan<- prometheus.Metric) {
 
 // queryInfo queries the A2S server over UDP. Failure will result in one or both of the return values being nil.
 func (c *Collector) queryInfo(excludePlayerMetrics bool) (serverInfo *a2s.ServerInfo, playerInfo *a2s.PlayerInfo) {
+	c.mu.Lock()
+	defer c.mu.Unlock()
+
 	var err error
 
 	// Lazy initialization of UDP client.

@@ -19,4 +19,4 @@ require (
 	google.golang.org/protobuf v1.36.12 // indirect
 )
 
-replace github.com/rumblefrog/go-a2s => github.com/solidDoWant/go-a2s v0.0.0-20261105063333-8b984e92ff37
+replace github.com/rumblefrog/go-a2s => github.com/solidDoWant/go-a2s v0.0.0-20261111023150-163bdea1c00e

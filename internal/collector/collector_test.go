@@ -6,6 +6,7 @@ import (
 	"regexp"
 	"sort"
 	"strings"
+	"sync"
 	"testing"
 
 	"github.com/prometheus/client_golang/prometheus"
@@ -184,6 +185,44 @@ func TestCollector_ExcludePlayerMetrics(t *testing.T) {
 			t.Errorf("metric name %s should have been excluded", *family.Name)
 		}
 	}
+}
+
+// TestCollector_ConcurrentGather scrapes from several goroutines at once, as HA
+// Prometheus/vmagent replicas do.
+func TestCollector_ConcurrentGather(t *testing.T) {
+	// Run a test A2S server.
+	conn, err := net.ListenUDP("udp", nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	srv := &testserver.TestServer{
+		ServerInfo: &a2s.ServerInfo{
+			Name: "foo",
+		},
+	}
+	go func() {
+		t.Error(srv.Serve(conn))
+	}()
+
+	registry := prometheus.NewPedanticRegistry()
+	registry.MustRegister(collector.New("", conn.LocalAddr().String(), true))
+
+	var wg sync.WaitGroup
+	for i := 0; i < 8; i++ {
+		wg.Add(1)
+		go func() {
+			defer wg.Done()
+			for j := 0; j < 5; j++ {
+				metrics, err := registry.Gather()
+				if err != nil {
+					t.Error(err)
+					return
+				}
+				testAssertGauge(t, metrics, "server_up", expectGauge{value: 1})
+			}
+		}()
+	}
+	wg.Wait()
 }
 
 type expectGauge struct {
