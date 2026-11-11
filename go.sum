@@ -20,8 +20,8 @@ github.com/prometheus/common v0.73.1 h1:SZWh/j4AvhCdhX8jvYSnxvPxhWlC9QZkjJ+tOrEr
 github.com/prometheus/common v0.73.1/go.mod h1:I9aA/Ukz9s1olOobh8KtCkU7B1mQPQsB9UvQPsUQ1Dk=
 github.com/prometheus/procfs v0.23.0 h1:ad+S6FTkzwaMgacKLM5h6bNKExS+DMH0YiUwXItH/o4=
 github.com/prometheus/procfs v0.23.0/go.mod h1:3AVXO0FqLafyYFU/V/IQRZlC8Rgqz8Dm/x6pKLK+RIk=
-github.com/solidDoWant/go-a2s v0.0.0-20261111023150-163bdea1c00e h1:VMwcIOu7D9O6tWFgZpkUUHUbBa8t95jBQdxqQ3hY004=
-github.com/solidDoWant/go-a2s v0.0.0-20261111023150-163bdea1c00e/go.mod h1:6nq//LMUMa3ElowQ7eH8atnDbQG+nVMFsaMFzSo8p/M=
+github.com/solidDoWant/go-a2s v0.0.0-20261111023547-c3d417f599b2 h1:qqIQ1IDo/O332FV4bZO/mKcmYPYTEGdQVvlwC34L/kw=
+github.com/solidDoWant/go-a2s v0.0.0-20261111023547-c3d417f599b2/go.mod h1:6nq//LMUMa3ElowQ7eH8atnDbQG+nVMFsaMFzSo8p/M=
 github.com/stretchr/testify v1.12.1 h1:EuwCh5fleGS7H32xRwO3wRGT7DxrDhLAT6FF8MpWDWE=
 github.com/stretchr/testify v1.12.1/go.mod h1:MDEgiDPPsNp5cuIrHPPCyornHKgEVbtFUmoNlxoYthg=
 go.uber.org/goleak v1.3.0 h1:2K3zAYmnTNqV73imy9J1T3WC+gmCePx2hEGkimedGto=
